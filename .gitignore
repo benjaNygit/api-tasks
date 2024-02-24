@@ -1,0 +1,6 @@
+.vscode
+
+# Go
+*.exe
+*.exe~
+*.log
