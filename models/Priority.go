@@ -1,6 +1,6 @@
 package models
 
 type Priority struct {
-	Code        uint
-	Description string
+	Code        uint   `json:"code"`
+	Description string `json:"description"`
 }

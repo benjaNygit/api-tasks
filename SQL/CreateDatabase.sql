@@ -1,0 +1,4 @@
+CREATE DATABASE Tasks_DB
+/**
+DROP DATABASE Tasks_DB
+*/

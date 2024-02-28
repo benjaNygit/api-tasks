@@ -7,12 +7,12 @@ import (
 )
 
 type Task struct {
-	Id           uuid.UUID
-	Title        string
-	Description  string
-	CategoryCode int
-	PriorityCode int
-	CreatedAt    time.Time
-	Done         bool
-	UserId       uuid.UUID
+	Id           uuid.UUID `json:"id"`
+	Title        string    `json:"title"`
+	Description  string    `json:"description"`
+	CategoryCode int       `json:"category_code"`
+	PriorityCode int       `json:"priority_code"`
+	CreatedAt    time.Time `json:"created_at"`
+	Done         bool      `json:"done"`
+	UserId       uuid.UUID `json:"user_id"`
 }
