@@ -1,13 +1,10 @@
 -- CREATE DATABASE Tasks_DB
+-- SQLite3
 
-/**
-DROP DATABASE Tasks_DB
-
-DROP TABLE dbo.Category
-DROP TABLE dbo.Priority
-DROP TABLE dbo.User
-DROP TABLE dbo.Task
-*/
+DROP TABLE IF EXISTS Task;
+DROP TABLE IF EXISTS User;
+DROP TABLE IF EXISTS Category;
+DROP TABLE IF EXISTS Priority;
 
 -- Crear Tabla Category
 CREATE TABLE "Category" (
