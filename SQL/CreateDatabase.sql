@@ -9,15 +9,11 @@ DROP TABLE dbo.Task
 */
 
 -- Crear Tabla Category
-CREATE TABLE [dbo].[Category](
-	[Code] [tinyint] NOT NULL,
-	[Description] [nvarchar](25) NOT NULL,
- CONSTRAINT [PK_Category] PRIMARY KEY CLUSTERED 
-(
-	[Code] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
-) ON [PRIMARY]
-GO
+CREATE TABLE "Category" (
+	"Code"	INTEGER,
+	"Description"	INTEGER NOT NULL UNIQUE,
+	PRIMARY KEY("Code" AUTOINCREMENT)
+);
 
 -- Crear Tabla Priority
 CREATE TABLE [dbo].[Priority](
