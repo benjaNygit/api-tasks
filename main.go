@@ -22,7 +22,7 @@ func main() {
 	db.ConnectDB()
 	defer db.DB.Close()
 
-	query := "INSERT INTO category (Description) VALUES ('ff')"
+	query := "SELECT * FROM User"
 	_, err := db.DB.Exec(query)
 	if err != nil {
 		log.Fatal(err)

@@ -16,3 +16,19 @@ type Task struct {
 	Done         bool      `json:"done"`
 	UserId       uuid.UUID `json:"user_id"`
 }
+
+func (t *Task) Create() bool {
+	return false
+}
+
+func (t *Task) Read() Task {
+	return Task{Id: t.Id}
+}
+
+func (t *Task) Update() Task {
+	return Task{Id: t.Id}
+}
+
+func (t *Task) Delete() bool {
+	return false
+}
