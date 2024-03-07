@@ -22,8 +22,8 @@ func main() {
 		return
 	}
 
-	// db.ConnectDB()
-	// defer db.DB.Close()
+	db.ConnectDB()
+	defer db.DB.Close()
 
 	router := mux.NewRouter()
 
@@ -35,12 +35,13 @@ func main() {
 		var category models.Category
 		json.NewDecoder(r.Body).Decode(&category)
 
-		fine := category.Create()
-		if fine {
-			json.NewEncoder(w).Encode(&category)
-		} else {
-			fmt.Fprintf(w, "Error creating category")
+		err := db.Create(category)
+		if err != nil {
+			w.WriteHeader(http.StatusBadRequest)
+			w.Write([]byte(err.Error()))
 		}
+
+		json.NewEncoder(w).Encode(category)
 	}).Methods("POST")
 
 	http.ListenAndServe(":3000", router)
