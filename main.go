@@ -1,11 +1,14 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
-	"log"
+	"net/http"
 	"os"
 
 	db "github.com/benjaNygit/api-tasks/db"
+	"github.com/benjaNygit/api-tasks/models"
+	mux "github.com/gorilla/mux"
 )
 
 func main() {
@@ -19,20 +22,26 @@ func main() {
 		return
 	}
 
-	db.ConnectDB()
-	defer db.DB.Close()
+	// db.ConnectDB()
+	// defer db.DB.Close()
 
-	query := "SELECT * FROM User"
-	_, err := db.DB.Exec(query)
-	if err != nil {
-		log.Fatal(err)
-	}
+	router := mux.NewRouter()
 
-	// router := mux.NewRouter()
+	router.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+		fmt.Fprintf(w, "Hello World Welcome to API v1")
+	}).Methods("GET")
 
-	// router.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-	// 	fmt.Fprintf(w, "Hello World Welcome to API v1")
-	// }).Methods("GET")
+	router.HandleFunc("/Category", func(w http.ResponseWriter, r *http.Request) {
+		var category models.Category
+		json.NewDecoder(r.Body).Decode(&category)
 
-	// http.ListenAndServe(":3000", router)
+		fine := category.Create()
+		if fine {
+			json.NewEncoder(w).Encode(&category)
+		} else {
+			fmt.Fprintf(w, "Error creating category")
+		}
+	}).Methods("POST")
+
+	http.ListenAndServe(":3000", router)
 }
