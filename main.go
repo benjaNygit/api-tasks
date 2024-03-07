@@ -1,13 +1,12 @@
 package main
 
 import (
-	"encoding/json"
 	"fmt"
 	"net/http"
 	"os"
 
 	db "github.com/benjaNygit/api-tasks/db"
-	"github.com/benjaNygit/api-tasks/models"
+	"github.com/benjaNygit/api-tasks/routes"
 	mux "github.com/gorilla/mux"
 )
 
@@ -27,22 +26,9 @@ func main() {
 
 	router := mux.NewRouter()
 
-	router.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		fmt.Fprintf(w, "Hello World Welcome to API v1")
-	}).Methods("GET")
+	router.HandleFunc("/", routes.IndexHandler)
 
-	router.HandleFunc("/Category", func(w http.ResponseWriter, r *http.Request) {
-		var category models.Category
-		json.NewDecoder(r.Body).Decode(&category)
-
-		err := db.Create(category)
-		if err != nil {
-			w.WriteHeader(http.StatusBadRequest)
-			w.Write([]byte(err.Error()))
-		}
-
-		json.NewEncoder(w).Encode(category)
-	}).Methods("POST")
+	router.HandleFunc("/Category", routes.CategoryPostHandler).Methods("POST")
 
 	http.ListenAndServe(":3000", router)
 }
