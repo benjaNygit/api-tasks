@@ -31,6 +31,7 @@ func main() {
 	router.HandleFunc("/Category", routes.CategoryPostHandler).Methods("POST")
 	router.HandleFunc("/Category", routes.CategoryGetHandler).Methods("GET")
 	router.HandleFunc("/Category", routes.CategoryPatchHandler).Methods("PATCH")
+	router.HandleFunc("/Category/{code}", routes.CategoryDeleteHandler).Methods("DELETE")
 
 	http.ListenAndServe(":3000", router)
 }

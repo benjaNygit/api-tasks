@@ -28,3 +28,15 @@ func Update(c models.Category) error {
 
 	return nil
 }
+
+func Delete(c models.Category) error {
+	stmt, _ := DB.Prepare(`DELETE FROM Category WHERE Code =?`)
+	defer stmt.Close()
+
+	_, err := stmt.Exec(c.Code)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
