@@ -29,6 +29,7 @@ func main() {
 	router.HandleFunc("/", routes.IndexHandler)
 
 	router.HandleFunc("/Category", routes.CategoryPostHandler).Methods("POST")
+	router.HandleFunc("/Category", routes.CategoryGetHandler).Methods("GET")
 
 	http.ListenAndServe(":3000", router)
 }

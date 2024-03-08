@@ -22,5 +22,10 @@ func CategoryPostHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func CategoryGetHandler(w http.ResponseWriter, r *http.Request) {
+	category, err := db.CategoryGetAll()
+	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+	}
 
+	json.NewEncoder(w).Encode(&category)
 }

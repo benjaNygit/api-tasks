@@ -4,15 +4,26 @@ import (
 	"github.com/benjaNygit/api-tasks/models"
 )
 
-// Model Category
-func Create(c models.Category) error {
-	stmt, _ := DB.Prepare(`INSERT INTO Category (Description) VALUES (?)`)
-	defer stmt.Close()
+// Category
+func CategoryGetAll() ([]models.Category, error) {
+	var category []models.Category
+	var c models.Category
 
-	_, err := stmt.Exec(c.Description)
+	rows, err := DB.Query(`SELECT Code, Description FROM Category`)
 	if err != nil {
-		return err
+		return nil, err
 	}
 
-	return nil
+	defer rows.Close()
+
+	for rows.Next() {
+		rows.Scan(
+			&c.Code,
+			&c.Description,
+		)
+
+		category = append(category, c)
+	}
+
+	return category, nil
 }
