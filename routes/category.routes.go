@@ -17,8 +17,6 @@ func CategoryPostHandler(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusBadRequest)
 		w.Write([]byte(err.Error()))
 	}
-
-	json.NewEncoder(w).Encode(category)
 }
 
 func CategoryGetHandler(w http.ResponseWriter, r *http.Request) {
@@ -28,4 +26,15 @@ func CategoryGetHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	json.NewEncoder(w).Encode(&category)
+}
+
+func CategoryPatchHandler(w http.ResponseWriter, r *http.Request) {
+	var category models.Category
+	json.NewDecoder(r.Body).Decode(&category)
+
+	err := db.Update(category)
+	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		w.Write([]byte(err.Error()))
+	}
 }
