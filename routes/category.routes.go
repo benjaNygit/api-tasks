@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+	"strconv"
 
 	"github.com/benjaNygit/api-tasks/db"
 	"github.com/benjaNygit/api-tasks/models"
@@ -42,13 +43,15 @@ func CategoryPatchHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func CategoryDeleteHandler(w http.ResponseWriter, r *http.Request) {
-	var category models.Category
-	params := mux.Vars(r)
-	s := params["code"]
+	code, _ := strconv.ParseUint(mux.Vars(r)["code"], 10, 16)
+	category, err := db.CategoryGet(code)
+	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		w.Write([]byte(err.Error()))
+	}
 
-	fmt.Println(s)
-
-	err := db.Delete(category)
+	fmt.Println(category.Code)
+	err = db.Delete(category)
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)
 		w.Write([]byte(err.Error()))

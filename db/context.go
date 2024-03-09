@@ -1,6 +1,8 @@
 package db
 
 import (
+	"fmt"
+
 	"github.com/benjaNygit/api-tasks/models"
 )
 
@@ -30,9 +32,10 @@ func Update(c models.Category) error {
 }
 
 func Delete(c models.Category) error {
-	stmt, _ := DB.Prepare(`DELETE FROM Category WHERE Code =?`)
+	stmt, _ := DB.Prepare(`DELETE Category WHERE Code = ?`)
 	defer stmt.Close()
 
+	fmt.Println(c.Code)
 	_, err := stmt.Exec(c.Code)
 	if err != nil {
 		return err
